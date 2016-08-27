@@ -10,7 +10,6 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ViewController@showView');
+Route::get('/{view}/{action}', 'ViewController@showView');
+Route::get('/{view}/{action}/{param}', 'ViewController@showView');
