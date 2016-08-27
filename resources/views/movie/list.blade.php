@@ -49,17 +49,17 @@
                   <div class="movie-summery">
                     <div class="ph movie-table">
                       <span class="dh">类型</span>
-                      <label>@foreach($movie['type'] as $type){{ $type }}&nbsp;</label>@endforeach
+                      @foreach($movie['type'] as $type){{ $type }}&nbsp;@endforeach
                     </div>
 
                     <div class="ph movie-table">
                       <span class="dh">国家</span>
-                      <label>@foreach($movie['country'] as $country){{ $country }}&nbsp;</label>@endforeach
+                      @foreach($movie['country'] as $country){{ $country }}&nbsp;@endforeach
                     </div>
 
                     <div class="ph movie-table">
                       <span class="dh">演员</span>
-                      <label>@foreach($movie['actor'] as $actor){{ $actor }}&nbsp;</label>@endforeach
+                      @foreach($movie['actor'] as $actor){{ $actor }}&nbsp;@endforeach
                     </div>
                   </div>
               </div>
