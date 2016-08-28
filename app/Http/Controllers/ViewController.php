@@ -11,6 +11,13 @@ use hexpang\Client\SSHClient\SSHClient;
 class ViewController extends Controller
 {
     public $storage;
+    public function formatBytes($size, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'KB', 'MB', 'GB', 'TB');
+
+        return round(pow(1024, $base - floor($base)), $precision).' '.$suffixes[floor($base)];
+    }
     public function __construct()
     {
         $this->storage = Storage::disk('local');
@@ -104,11 +111,64 @@ class ViewController extends Controller
             return $result;
         } elseif (is_numeric($action)) {
             $info = $this->loadMovieInfo($action);
-            // dd($info);
+            if (is_numeric($param)) {
+                //下载
+                $torrent = $info['torrent'][$param];
+                // dd($torrent);
+                $fileName = 'torrent/'.$action.'-'.$param.'.torrent';
+                if (!$this->storage->exists($fileName)) {
+                    $url = $torrent['url'];
+                    $bot = new MovieBot();
+                    $torrent = $bot->downloadTorrent($url);
+                    $this->storage->put($fileName, $torrent);
+                }
+                $torrent = base64_encode($this->storage->get($fileName));
+                $ac = new AriaController();
+                // dd($ac->addTorrent($torrent));
+                $r = $ac->addTorrent($torrent);
+                if (isset($r['result'])) {
+                    $info['download'] = '下载任务已添加.';
+                }
+            }
+
             return $info;
         } else {
             return;
         }
+    }
+    public function aria2Action($action, $param = null, $param1 = null)
+    {
+        $result = [];
+        $ac = new AriaController();
+        if ($action == 'tasks') {
+            //任务查看
+            if ($param && $param1) {
+                $gid = $param;
+                $action = $param1;
+                $ac->$param1($gid);
+            }
+            $stat = $ac->getGlobalStat();
+            if (isset($stat['error'])) {
+                $result['error'] = $stat['error'];
+            } else {
+                $result['stat'] = $stat['result'];
+                $result['stat']['downloadSpeed'] = $this->formatBytes($result['stat']['downloadSpeed']);
+                $result['stat']['uploadSpeed'] = $this->formatBytes($result['stat']['uploadSpeed']);
+                //uploadSpeed
+            }
+            $downloading = $ac->tellActive();
+
+            $result['downloading'] = $downloading['result'];
+            foreach ($result['downloading'] as $k => $v) {
+                $result['downloading'][$k]['completedLength'] = $this->formatBytes($v['completedLength']);
+                $result['downloading'][$k]['totalLength'] = $this->formatBytes($v['totalLength']);
+                $result['downloading'][$k]['downloadSpeed'] = $this->formatBytes($v['downloadSpeed']);
+                //$this->formatBytes($result['stat']['uploadSpeed'] * 8);
+            }
+            // dd($result['downloading']);
+        }
+
+        return $result;
     }
     public function showView(Request $request, $view = 'system', $action = 'status', $param = null, $param1 = null)
     {
@@ -117,12 +177,14 @@ class ViewController extends Controller
         $menus = json_decode($file, true);
         $data = [];
         if ($view == 'movie') {
-            $data = $this->movieAction($action, $param);
+            $data = $this->movieAction($action, $param, $param1);
             if (is_numeric($action)) {
                 $action = 'detail';
             }
         } elseif ($view == 'system') {
             $data = $this->systemAction($action, $param, $param1);
+        } elseif ($view == 'aria2') {
+            $data = $this->aria2Action($action, $param, $param1);
         }
 
         return view("{$view}.{$action}", ['menus' => $menus, 'view' => $view, 'action' => $action, 'data' => $data, 'title' => $title, 'param' => $param]);
