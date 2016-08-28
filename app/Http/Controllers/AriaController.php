@@ -10,10 +10,10 @@ class AriaController
     private $server;
     private $ch;
 
-    public function __construct($server = 'http://pi:6800/jsonrpc')
+    public function __construct()
     {
-        $this->server = $server;
-        $this->ch = curl_init($server);
+        $this->server = env('SERVER_ARIA', 'http://localhost:6800/jsonrpc');
+        $this->ch = curl_init($this->server);
         curl_setopt_array($this->ch, array(
             CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true,
