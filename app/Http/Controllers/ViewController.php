@@ -33,17 +33,39 @@ class ViewController extends Controller
 
         return $info;
     }
-    private function systemAction($action, $param = null)
+    private function systemAction($action, $param = null, $param1 = null)
     {
         $ssh = new SSHClient(env('SERVER_HOST'), env('SERVER_PORT', 22), env('SERVER_USERNAME'), env('SERVER_PASSWORD'));
 
         if ($action == 'status') {
             if ($ssh->connect() && $ssh->authorize()) {
                 $checks = ['minidlna', 'smbd', 'aria2c'];
+                if ($param && $param1) {
+                    // dd($param);
+                    //服务管理
+                    $cmd = '';
+                    if ($param == 'aria2c') {
+                        if ($param1 == 'start') {
+                            $cmd = 'aria2c -D --conf-path=/home/osmc/.aria2/aria2.conf';
+                        } else {
+                            $cmd = "ps -A |grep 'aria2c'| awk '{print $1}'";
+                            $pid = $ssh->cmd($cmd);
+                            $cmd = "kill {$pid}";
+                            // $r = $ssh->cmd($cmd);
+                        }
+                    } else {
+                        $cmd = 'sudo /etc/init.d/'.$param.' '.$param1;
+                    }
+                    $s = $ssh->cmd($cmd);
+                }
                 $result = [];
                 foreach ($checks as $check) {
                     $r = $ssh->cmd('ps -aux | grep '.$check);
-                    if (stripos($r, '/'.$check) === false) {
+                    $check_str = '/'.$check;
+                    if ($check == 'aria2c') {
+                        $check_str = 'conf-path';
+                    }
+                    if (stripos($r, $check_str) === false) {
                         $result[$check] = false;
                     } else {
                         $result[$check] = true;
@@ -56,7 +78,7 @@ class ViewController extends Controller
             }
         }
     }
-    private function movieAction($action, $param = null)
+    private function movieAction($action, $param = null, $param1 = null)
     {
         if ($action == 'list') {
             $bot = new MovieBot();
@@ -88,7 +110,7 @@ class ViewController extends Controller
             return;
         }
     }
-    public function showView(Request $request, $view = 'system', $action = 'status', $param = null)
+    public function showView(Request $request, $view = 'system', $action = 'status', $param = null, $param1 = null)
     {
         $title = '';
         $file = \File::get(storage_path('config/menu.json'));
@@ -100,7 +122,7 @@ class ViewController extends Controller
                 $action = 'detail';
             }
         } elseif ($view == 'system') {
-            $data = $this->systemAction($action, $param);
+            $data = $this->systemAction($action, $param, $param1);
         }
 
         return view("{$view}.{$action}", ['menus' => $menus, 'view' => $view, 'action' => $action, 'data' => $data, 'title' => $title, 'param' => $param]);
