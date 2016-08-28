@@ -7,6 +7,9 @@
 .red {
   color:red !important;
 }
+.dy a {
+  color:#5add2d;
+}
 </style>
 @endsection
 @section('body')
@@ -17,7 +20,14 @@
             </h4>
             @foreach($data['service'] as $service_name=>$service)
               <div class="ph">
-                <span class="dy dh {{ $service ? '' : 'red' }}">{{ $service ? '运行中' : '未启动' }}</span>
+                <span class="dy dh {{ $service ? '' : 'red' }}">
+                  @if($service)
+                    <a href="/system/status/{{ $service_name }}/stop">停止</a>
+                  @else
+                    <a href="/system/status/{{ $service_name }}/start">启动</a>
+                  @endif
+                  {{ $service ? '运行中' : '未启动' }}
+                </span>
                 {{ $service_name }}
               </div>
             @endforeach
