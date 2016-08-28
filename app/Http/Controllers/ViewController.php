@@ -64,6 +64,7 @@ class ViewController extends Controller
                         $cmd = 'sudo /etc/init.d/'.$param.' '.$param1;
                     }
                     $s = $ssh->cmd($cmd);
+                    sleep(1);
                 }
                 $result = [];
                 foreach ($checks as $check) {
@@ -165,7 +166,7 @@ class ViewController extends Controller
                 $result['downloading'][$k]['downloadSpeed'] = $this->formatBytes($v['downloadSpeed']);
                 //$this->formatBytes($result['stat']['uploadSpeed'] * 8);
             }
-            // dd($result['downloading']);
+            // dd($result);
         }
 
         return $result;
