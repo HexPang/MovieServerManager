@@ -18,7 +18,7 @@
             <h4 class="ty">
                 服务状态
             </h4>
-            @if(!$data)
+            @if(isset($data['service']))
               @foreach($data['service'] as $service_name=>$service)
                 <div class="ph">
                   <span class="dy dh {{ $service ? '' : 'red' }}">
