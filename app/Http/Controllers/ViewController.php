@@ -42,7 +42,7 @@ class ViewController extends Controller
     }
     private function systemAction($action, $param = null, $param1 = null)
     {
-        $ssh = new SSHClient(env('SERVER_HOST'), env('SERVER_PORT', 22), env('SERVER_USERNAME'), env('SERVER_PASSWORD'));
+        $ssh = new SSHClient(env('SERVER_HOST'), env('SERVER_SSH_PORT', 22), env('SERVER_USERNAME'), env('SERVER_PASSWORD'));
 
         if ($action == 'status') {
             if ($ssh->connect() && $ssh->authorize()) {
