@@ -18,19 +18,28 @@
             <h4 class="ty">
                 服务状态
             </h4>
-            @foreach($data['service'] as $service_name=>$service)
+            @if(!$data)
+              @foreach($data['service'] as $service_name=>$service)
+                <div class="ph">
+                  <span class="dy dh {{ $service ? '' : 'red' }}">
+                    @if($service)
+                      <a href="/system/status/{{ $service_name }}/stop">停止</a>
+                    @else
+                      <a href="/system/status/{{ $service_name }}/start">启动</a>
+                    @endif
+                    {{ $service ? '运行中' : '未启动' }}
+                  </span>
+                  {{ $service_name }}
+                </div>
+              @endforeach
+            @else
               <div class="ph">
-                <span class="dy dh {{ $service ? '' : 'red' }}">
-                  @if($service)
-                    <a href="/system/status/{{ $service_name }}/stop">停止</a>
-                  @else
-                    <a href="/system/status/{{ $service_name }}/start">启动</a>
-                  @endif
-                  {{ $service ? '运行中' : '未启动' }}
+                <span class="dy dh red">
+                  无法连接至服务器.请检查配置文件.
                 </span>
-                {{ $service_name }}
+                错误
               </div>
-            @endforeach
+            @endif
         </div>
     </div>
 @endsection
