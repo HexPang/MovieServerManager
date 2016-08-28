@@ -67,7 +67,10 @@
         @yield('content')
     </div>
 </div>
-
+<script src="/js/jquery.min.js"></script>
+<script src="/js/application.min.js"></script>
+<script src="/js/tablesorter.min.js"></script>
+<script src="/js/toolkit.js"></script>
 </body>
 <div class="bottom">
     <div class="bottom-link">
