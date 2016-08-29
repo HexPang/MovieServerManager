@@ -26,3 +26,7 @@ SERVER_ARIA=http://localhost:6800/jsonrpc
 ![1](https://github.com/HexPang/MovieServerManager/raw/master/screenshots/1.png)
 
 ![2](https://github.com/HexPang/MovieServerManager/raw/master/screenshots/2.png)
+
+![3](https://github.com/HexPang/MovieServerManager/raw/master/screenshots/3.png)
+
+![4](https://github.com/HexPang/MovieServerManager/raw/master/screenshots/4.png)
