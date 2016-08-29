@@ -1,6 +1,5 @@
 [
   {"name":"系统状态","action":"status","view":"system"},
   {"name":"电影下载","action":"list","view":"movie"},
-  {"name":"我的电影","action":"downloaded","view":"aria2"},
   {"name":"任务管理","action":"tasks","view":"aria2"}
 ]
