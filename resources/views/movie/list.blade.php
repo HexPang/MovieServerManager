@@ -15,9 +15,9 @@
   }
   .movie-summery {
     float:right;
-    width:auto;
-    min-width: 55px;
-    max-width:70%;
+    width:70%;
+    min-width: 55%;
+    max-width: 70%;
   }
   .movie-table {
     max-height: 48px;
@@ -49,7 +49,7 @@
               </a>
               <div class="movie-block">
                   <div class="movie-image">
-                    <img src="{{ $movie['image'] }}" height="144">
+                    <img src="{{ $movie['image'] }}" height="144" width="100">
                   </div>
                   <div class="movie-summery">
                     <div class="ph movie-table">
