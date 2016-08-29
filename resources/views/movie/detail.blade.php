@@ -6,12 +6,26 @@
 .block {
   display:block;
 }
+.file {
+  width:100%;
+  padding-left:20px;
+  /*max-height: 41px;*/
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+small {
+  float:right;
+}
 </style>
 @endsection
 @section('body')
     <div class="ali center">
         <div class="by">
             <h4 class="ty">
+              @if(@$data['score'] > 0)
+                <label class="score">{{ $data['score'] }}</label>
+              @endif
                 {{ $data['title'] }}
             </h4>
 
@@ -36,6 +50,9 @@
             <div class="ph movie-table">
               @foreach($data['torrent'] as $index=>$torrent)
                 <a href="/movie/{{ $data['id'] }}/{{ $index }}" class="block">{{ $torrent['file_name'] }}</a>
+                @foreach($torrent['files'] as $file)
+                  <label class="file">{!! $file !!}</label>
+                @endforeach
               @endforeach
             </div>
             @if(isset($data['download']))
