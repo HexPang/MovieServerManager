@@ -28,6 +28,7 @@
 @section('body')
     <div class="ali center">
         <div class="by">
+          @if($data)
             <h4 class="ty">
                 任务状态
                 <span class="stat">停止任务:{{ $data['stat']['numStoppedTotal'] }}</span>
@@ -46,6 +47,14 @@
                 {{ $file['bittorrent']['info']['name'] }}
               </div>
             @endforeach
+          @else
+            <div class="ph">
+              <span class="dy dh red">
+                无法连接至服务器.请检查配置文件.
+              </span>
+              错误
+            </div>
+          @endif
         </div>
     </div>
 @endsection
