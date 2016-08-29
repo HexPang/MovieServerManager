@@ -18,6 +18,7 @@ class AriaController
             CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
+            CURLOPT_CONNECTTIMEOUT => 5,
         ));
     }
 
