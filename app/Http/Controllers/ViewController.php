@@ -26,13 +26,16 @@ class ViewController extends Controller
     {
         $fileName = 'movie/'.$id.'.json';
         $info = null;
+        $bot = new MovieBot();
+
         if ($this->storage->exists($fileName)) {
             $json = $this->storage->get($fileName);
-
             $info = json_decode($json, true);
+        } else {
+            $info = $bot->loadMovieInfo($id);
+            $this->storage->put($fileName, json_encode($info));
         }
         if ($info && !isset($info['torrent'])) {
-            $bot = new MovieBot();
             $torrent = $bot->loadTorrentInfo($info['url']);
             $info['torrent'] = $torrent;
             $this->storage->put($fileName, json_encode($info));
