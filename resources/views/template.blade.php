@@ -56,6 +56,10 @@
         .bottom-link a {
             color:#434857;
         }
+        .score {
+          color:yellow;
+          font-weight: bold;
+        }
     </style>
     @yield('header')
 </head>
