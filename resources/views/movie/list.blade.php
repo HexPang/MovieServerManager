@@ -15,7 +15,9 @@
   }
   .movie-summery {
     float:right;
-    width:70%;
+    width:auto;
+    min-width: 55px;
+    max-width:70%;
   }
   .movie-table {
     max-height: 48px;
@@ -40,6 +42,9 @@
       <div class="gr">
           <div class="by">
               <a class="ty title" href="/movie/{{ $movie['id'] }}">
+                @if(@$movie['score'] > 0)
+                  <label class="score">{{ $movie['score'] }}</label>
+                @endif
                   {{ $movie['title'] }}
               </a>
               <div class="movie-block">
