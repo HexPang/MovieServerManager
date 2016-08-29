@@ -152,6 +152,9 @@ class ViewController extends Controller
                 $ac->$param1($gid);
             }
             $stat = $ac->getGlobalStat();
+            if ($stat == null) {
+                return;
+            }
             if (isset($stat['error'])) {
                 $result['error'] = $stat['error'];
             } else {
