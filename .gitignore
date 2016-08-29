@@ -6,6 +6,8 @@ node_modules/
 bootstrap/compiled.php
 app/storage/
 
+.DS_Store
+
 # Laravel 5 & Lumen specific
 bootstrap/cache/
 .env.*.php
