@@ -132,6 +132,12 @@ class ViewController extends Controller
                 $r = $ac->addTorrent($torrent);
                 if (isset($r['result'])) {
                     $info['download'] = '下载任务已添加.';
+                } else {
+                    if ($r == null) {
+                        $info['download'] = '无法连接到服务器.';
+                    } else {
+                        $info['download'] = '下载任务添加失败.';
+                    }
                 }
             }
 
