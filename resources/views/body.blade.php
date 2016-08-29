@@ -31,6 +31,17 @@
                 <h6 class="apd">Dashboards</h6>
                 <h2 class="apc">{{ $title }}</h2>
             </div>
+
+            <div class="ob ape">
+    <div class="tn aol">
+      <div class="aor">
+        <input class="form-control" id="movie_id" type="text" placeholder="请输入ID...">
+        <button type="button" class="fm" onclick="location.href='/movie/' + $('#movie_id').val();">
+          <span class="bv adn"></span>
+        </button>
+      </div>
+    </div>
+  </div>
         </div>
 
         <hr class="aky">
