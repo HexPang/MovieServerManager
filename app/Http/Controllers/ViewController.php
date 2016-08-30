@@ -56,6 +56,14 @@ class ViewController extends Controller
                     while (stripos($disk, '  ')) {
                         $disk = str_ireplace('  ', ' ', $disk);
                     }
+                    $d = explode("\n", $disk);
+                    $disk = [];
+                    foreach ($d as $dd) {
+                        if ($dd != '') {
+                            $disk[] = explode(' ', $dd);
+                        }
+                    }
+                    // dd($disk);
                 }
                 $checks = ['minidlna', 'smbd', 'aria2c'];
                 if ($param && $param1) {
@@ -90,6 +98,7 @@ class ViewController extends Controller
                         $result[$check] = true;
                     }
                 }
+                $ssh->disconnect();
 
                 return ['service' => $result, 'disks' => $disk];
             } else {
