@@ -141,7 +141,17 @@ class ViewController extends Controller
             $page = $param ? $param : 1;
             $cacheName = "movie_{$action}_{$param1}_{$page}";
             $result = Cache::get($cacheName);
-
+            $start_page = 1;
+            if ($page > 3) {
+                $start_page = $page - 3;
+            } else {
+                $start_page = 1;
+            }
+            if ($page > 3) {
+                $end_page = $page + 3;
+            } else {
+                $end_page = $start_page + 5;
+            }
             if (!$result) {
                 $result = $bot->loadMovies($page, $param1);
                 Cache::put($cacheName, $result, 240);
@@ -161,6 +171,8 @@ class ViewController extends Controller
             // $result['movies'] = $result;
             $result['movie_type'] = $type;
             $result['type'] = $param1;
+            $result['page_range'] = [$start_page, $end_page];
+            // dd($result['page_range']);
 
             return $result;
         } elseif (is_numeric($action)) {
