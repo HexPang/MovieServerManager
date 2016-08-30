@@ -35,7 +35,8 @@ class ViewController extends Controller
             $info = $bot->loadMovieInfo($id);
             $this->storage->put($fileName, json_encode($info));
         }
-        if ($info && !isset($info['torrent'])) {
+        // && !isset($info['torrent'])
+        if ($info) {
             $torrent = $bot->loadTorrentInfo($info['url']);
             $info['torrent'] = $torrent;
             $this->storage->put($fileName, json_encode($info));
