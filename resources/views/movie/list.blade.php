@@ -92,8 +92,24 @@
       </div>
     @endforeach
   </div>
-  @if($param != null && $param != 1)
-    <a href="/movie/list/{{ $param-1 }}/{{ $param1 ? $param1 : 0 }}" class="ce apn ame" style="margin-bottom:30px;">上一页</a>
+  <div class="db">
+  <ul class="ow">
+    @if($param != null && $param != 1)
+    <li>
+      <a href="/movie/list/{{ $param-1 }}/{{ $param1 ? $param1 : 0 }}" aria-label="Previous">
+        <span aria-hidden="true">«</span>
+      </a>
+    </li>
   @endif
-  <a href="/movie/list/{{ ($param ? $param : 1) + 1 }}/{{ $param1 ? $param1 : 0 }}" class="ce apn ame" style="margin-bottom:30px;">下一页</a>
+    {{-- <li class="active"><a href="#">1</a></li> --}}
+    @for($i=$data['page_range'][0];$i<=$data['page_range'][1];$i++)
+      <li @if($data['page'] == $i) class='active' @endif><a href="/movie/list/{{ $i }}/{{ $param1 ? $param1 : 0 }}">{{ $i }}</a></li>
+    @endfor
+    <li>
+      <a href="/movie/list/{{ ($param ? $param : 1) + 1 }}/{{ $param1 ? $param1 : 0 }}" aria-label="Next">
+        <span aria-hidden="true">»</span>
+      </a>
+    </li>
+  </ul>
+</div>
 @endsection
