@@ -50,9 +50,8 @@
 @endsection
 @section('body')
   <div class="ph">
-    {{-- {{ dd($data) }} --}}
     @foreach($data['movie_type'] as $key=>$name)
-      <a href="/movie/list/1/{{ $key }}">{{ $name }}</a>
+      <a href="/movie/list/{{ $data['page'] }}/{{ $key }}">{{ $name }}</a>
     @endforeach
   </div>
   <div class="fu">
@@ -91,7 +90,7 @@
     @endforeach
   </div>
   @if($param != null && $param != 1)
-    <a href="/movie/list/{{ $param-1 }}" class="ce apn ame" style="margin-bottom:30px;">上一页</a>
+    <a href="/movie/list/{{ $param-1 }}/{{ $param1 ? $param1 : 0 }}" class="ce apn ame" style="margin-bottom:30px;">上一页</a>
   @endif
-  <a href="/movie/list/{{ ($param ? $param : 1) + 1 }}" class="ce apn ame" style="margin-bottom:30px;">下一页</a>
+  <a href="/movie/list/{{ ($param ? $param : 1) + 1 }}/{{ $param1 ? $param1 : 0 }}" class="ce apn ame" style="margin-bottom:30px;">下一页</a>
 @endsection
