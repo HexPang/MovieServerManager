@@ -46,10 +46,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .movie-filter {
+    margin-bottom:5px;
+  }
   </style>
 @endsection
 @section('body')
-  <div class="ph">
+  <div class="ph movie-filter">
     @foreach($data['movie_type'] as $key=>$name)
       <a href="/movie/list/{{ $data['page'] }}/{{ $key }}">{{ $name }}</a>
     @endforeach
