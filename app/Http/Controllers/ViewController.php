@@ -50,6 +50,13 @@ class ViewController extends Controller
 
         if ($action == 'status') {
             if ($ssh->connect() && $ssh->authorize()) {
+                $diskUses_cmd = 'df -h | grep /dev/sda';
+                $disk = $ssh->cmd($diskUses_cmd);
+                if ($disk) {
+                    while (stripos($disk, '  ')) {
+                        $disk = str_ireplace('  ', ' ', $disk);
+                    }
+                }
                 $checks = ['minidlna', 'smbd', 'aria2c'];
                 if ($param && $param1) {
                     // dd($param);
@@ -84,7 +91,7 @@ class ViewController extends Controller
                     }
                 }
 
-                return ['service' => $result];
+                return ['service' => $result, 'disks' => $disk];
             } else {
                 return;
             }
