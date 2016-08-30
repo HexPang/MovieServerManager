@@ -91,6 +91,7 @@ class ViewController extends Controller
     }
     private function movieAction($action, $param = null, $param1 = null)
     {
+        $param1 = $param1 ? $param1 : 0;
         if ($action == 'list') {
             $type = [
             '0' => '全部',
@@ -121,10 +122,11 @@ class ViewController extends Controller
           ];
             $bot = new MovieBot();
             $page = $param ? $param : 1;
-            $cacheName = "movie_{$action}_$page";
+            $cacheName = "movie_{$action}_{$param1}_{$page}";
             $result = Cache::get($cacheName);
+
             if (!$result) {
-                $result = $bot->loadMovies($page);
+                $result = $bot->loadMovies($page, $param1);
                 Cache::put($cacheName, $result, 240);
             }
             foreach ($result['movies'] as $k => $v) {
@@ -138,8 +140,10 @@ class ViewController extends Controller
                     $this->storage->put($fileName, json_encode($result['movies'][$k]));
                 }
             }
+            $result['page'] = $page;
             // $result['movies'] = $result;
             $result['movie_type'] = $type;
+            $result['type'] = $param1;
 
             return $result;
         } elseif (is_numeric($action)) {
@@ -229,6 +233,6 @@ class ViewController extends Controller
             $data = $this->aria2Action($action, $param, $param1);
         }
 
-        return view("{$view}.{$action}", ['menus' => $menus, 'view' => $view, 'action' => $action, 'data' => $data, 'title' => $title, 'param' => $param]);
+        return view("{$view}.{$action}", ['menus' => $menus, 'view' => $view, 'action' => $action, 'data' => $data, 'title' => $title, 'param' => $param, 'param1' => $param1]);
     }
 }
