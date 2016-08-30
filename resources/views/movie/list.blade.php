@@ -49,6 +49,12 @@
   </style>
 @endsection
 @section('body')
+  <div class="ph">
+    {{-- {{ dd($data) }} --}}
+    @foreach($data['movie_type'] as $key=>$name)
+      <a href="/movie/list/1/{{ $key }}">{{ $name }}</a>
+    @endforeach
+  </div>
   <div class="fu">
     @foreach($data['movies'] as $movie)
       <div class="gr">
