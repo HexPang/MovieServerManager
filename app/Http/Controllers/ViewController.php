@@ -92,6 +92,33 @@ class ViewController extends Controller
     private function movieAction($action, $param = null, $param1 = null)
     {
         if ($action == 'list') {
+            $type = [
+            '0' => '全部',
+            '1' => '剧情',
+            '7' => '喜剧',
+            '18' => '动作',
+            '27' => '惊悚',
+            '2' => '爱情',
+            '8' => '犯罪',
+            '14' => '冒险',
+            '10' => '恐怖',
+            '20' => '科幻',
+            '21' => '悬疑',
+            '3' => '奇幻',
+            '15' => '家庭',
+            '13' => '动画',
+            '22' => '纪录片',
+            '49' => '战争',
+            '29' => '历史',
+            '63' => '传记',
+            '23' => '音乐',
+            '125' => '歌舞',
+            '16' => '运动',
+            '64' => '西部',
+            '79' => '短片',
+            '91' => '同性',
+            '61' => '古装',
+          ];
             $bot = new MovieBot();
             $page = $param ? $param : 1;
             $cacheName = "movie_{$action}_$page";
@@ -111,6 +138,8 @@ class ViewController extends Controller
                     $this->storage->put($fileName, json_encode($result['movies'][$k]));
                 }
             }
+            // $result['movies'] = $result;
+            $result['movie_type'] = $type;
 
             return $result;
         } elseif (is_numeric($action)) {
