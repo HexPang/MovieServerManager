@@ -250,7 +250,7 @@ class ViewController extends Controller
 
         return $result;
     }
-    public function showView(Request $request, $view = 'system', $action = 'status', $param = null, $param1 = null)
+    public function showView(Request $request, $view = 'movie', $action = 'list', $param = null, $param1 = null)
     {
         $title = '';
         $file = \File::get(storage_path('config/menu.json'));
