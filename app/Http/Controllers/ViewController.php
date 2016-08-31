@@ -137,6 +137,10 @@ class ViewController extends Controller
             '91' => '同性',
             '61' => '古装',
           ];
+            $area = [0 => '全部', 5 => '美国', 19 => '英国', 30 => '中国大陆', 41 => '法国', 25 => '日本', 36 => '香港',
+          9 => '德国', 47 => '加拿大', 88 => '韩国', 69 => '印度', 31 => '意大利', 67 => '澳大利亚', 4 => '西班牙',
+          37 => '台湾', 35 => '比利时', 75 => '荷兰', 83 => '瑞典', 87 => '俄罗斯', 82 => '丹麦', 48 => '泰国',
+        ];
             $bot = new MovieBot();
             $page = $param ? $param : 1;
             $cacheName = "movie_{$action}_{$param1}_{$page}";
@@ -172,6 +176,7 @@ class ViewController extends Controller
             $result['movie_type'] = $type;
             $result['type'] = $param1;
             $result['page_range'] = [$start_page, $end_page];
+            $result['area_list'] = $area;
             // dd($result['page_range']);
 
             return $result;
