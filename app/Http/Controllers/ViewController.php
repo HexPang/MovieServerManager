@@ -136,7 +136,12 @@ class ViewController extends Controller
         if (env('MOVIE_FILE_URL', null) == null) {
             return;
         }
-        $movies = $this->treeFiles(env('MOVIE_FILE_URL'));
+        $files = $this->treeFiles(env('MOVIE_FILE_URL'));
+        $movies = [];
+        foreach ($files as $file) {
+            $fileName = end(explode('/', $file));
+            $movies[] = ['name' => $fileName, 'file' => $file, 'size' => $this->formatBytes(filesize($file))];
+        }
         dd($movies);
 
         return $movies;
