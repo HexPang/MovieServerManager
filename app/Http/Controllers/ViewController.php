@@ -110,13 +110,18 @@ class ViewController extends Controller
     {
         $dir = dir($path);
         $files = [];
+        $filter = ['mkv', 'mp4', 'avi'];
         while ($file = $dir->read()) {
             if ((is_dir("$path/$file")) and ($file != '.') and ($file != '..')) {
                 $result = $this->treeFiles("$path/$file");
                 $files = array_merge($result, $files);
             } else {
                 if ($file != '.' && $file != '..') {
-                    $files[] = $path.'/'.$file;
+                    $ext = explode('.', $file);
+                    $ext = $ext[count($ext) - 1];
+                    if (in_array($ext, $filter)) {
+                        $files[] = $path.'/'.$file;
+                    }
                 }
             }
         }
