@@ -126,7 +126,10 @@ class ViewController extends Controller
     }
     private function loadLocalMovies()
     {
-        $movies = $this->treeFiles('/volumes/HDD/Download');
+        if (env('MOVIE_FILE_URL', null) == null) {
+            return;
+        }
+        $movies = $this->treeFiles(env('MOVIE_FILE_URL'));
         dd($movies);
 
         return $movies;
