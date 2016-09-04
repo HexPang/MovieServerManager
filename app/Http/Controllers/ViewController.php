@@ -150,6 +150,12 @@ class ViewController extends Controller
     {
         $param1 = $param1 ? $param1 : 0;
         if ($action == 'local') {
+            if ($param != null) {
+                $movieFile = base64_decode($param);
+                if (file_exists($movieFile)) {
+                    //Omxplayer
+                }
+            }
             $data['movies'] = $this->loadLocalMovies();
 
             return $data;
