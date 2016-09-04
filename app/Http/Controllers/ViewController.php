@@ -139,10 +139,10 @@ class ViewController extends Controller
         $files = $this->treeFiles(env('MOVIE_FILE_URL'));
         $movies = [];
         foreach ($files as $file) {
-            $fileName = end(explode('/', $file));
+            $exp = explode('/', $file);
+            $fileName = end($exp);
             $movies[] = ['name' => $fileName, 'file' => $file, 'size' => $this->formatBytes(filesize($file))];
         }
-        dd($movies);
 
         return $movies;
     }
