@@ -106,10 +106,39 @@ class ViewController extends Controller
             }
         }
     }
+    private function treeFiles($path)
+    {
+        $dir = dir($path);
+        $files = [];
+        while ($file = $dir->read()) {
+            if ((is_dir("$path/$file")) and ($file != '.') and ($file != '..')) {
+                $result = $this->treeFiles("$path/$file");
+                $files = array_merge($result, $files);
+            } else {
+                if ($file != '.' && $file != '..') {
+                    $files[] = $path.'/'.$file;
+                }
+            }
+        }
+        $dir->close();
+
+        return $files;
+    }
+    private function loadLocalMovies()
+    {
+        $movies = $this->treeFiles('/volumes/HDD/Download');
+        dd($movies);
+
+        return $movies;
+    }
     private function movieAction($action, $param = null, $param1 = null)
     {
         $param1 = $param1 ? $param1 : 0;
-        if ($action == 'list') {
+        if ($action == 'local') {
+            $data['movies'] = $this->loadLocalMovies();
+
+            return $data;
+        } elseif ($action == 'list') {
             $type = [
             '0' => '全部',
             '1' => '剧情',
