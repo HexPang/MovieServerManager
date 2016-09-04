@@ -8,21 +8,13 @@
           <tr>
             <th class="header">文件名</th>
             <th class="header">大小</th>
-            <th class="header">格式</th>
             <th class="header">操作</th>
           </tr>
         </thead>
         <tbody>
-          {{-- @foreach($data['disks'] as $disk)
-            <tr>
-              <td>{{ $disk[0] }}</td>
-              <td>{{ $disk[5] }}</td>
-              <td>{{ $disk[1] }}</td>
-              <td>{{ $disk[2] }}</td>
-              <td>{{ $disk[3] }}</td>
-              <td>{{ $disk[4] }}</td>
-            </tr>
-          @endforeach --}}
+          @foreach($data['movies'] as $movie)
+            <tr><td>{{ $movie['name'] }}</td><td>{{ $movie['size'] }}</td><td><a href="/movie/play/{{ urlencode($movie['file']) }}">播放</a></td></tr>
+          @endforeach
       </tbody>
       </table>
     </div>
