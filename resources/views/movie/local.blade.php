@@ -12,8 +12,9 @@
           </tr>
         </thead>
         <tbody>
+          {{-- <td>{{ $movie['size'] }}</td> --}}
           @foreach($data['movies'] as $movie)
-            <tr><td>{{ $movie['name'] }}</td><td><a href="/movie/play/{{ urlencode($movie['file']) }}">播放</a></td></tr>
+            <tr><td>{{ $movie['name'] }}</td><td><a href="/movie/local/{{ urlencode($movie['file']) }}">播放</a></td></tr>
           @endforeach
       </tbody>
       </table>
