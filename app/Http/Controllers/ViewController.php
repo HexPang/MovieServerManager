@@ -117,10 +117,12 @@ class ViewController extends Controller
                 $files = array_merge($result, $files);
             } else {
                 if ($file != '.' && $file != '..') {
-                    $ext = explode('.', $file);
-                    $ext = $ext[count($ext) - 1];
-                    if (in_array($ext, $filter)) {
-                        $files[] = $path.'/'.$file;
+                    if (substr($file, 0, 2) != '._') {
+                        $ext = explode('.', $file);
+                        $ext = $ext[count($ext) - 1];
+                        if (in_array($ext, $filter)) {
+                            $files[] = $path.'/'.$file;
+                        }
                     }
                 }
             }
