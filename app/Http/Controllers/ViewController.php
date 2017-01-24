@@ -211,10 +211,7 @@ class ViewController extends Controller
                 Cache::put($cacheName, $result, 240);
             }
             foreach ($result['movies'] as $k => $v) {
-                $id = explode('/', $v['url']);
-                $id = $id[count($id) - 1];
-                $id = explode('.', $id);
-                $id = $id[0];
+                $id = $v['id'];
                 $result['movies'][$k]['id'] = $id;
                 $fileName = 'movie/'.$id.'.json';
                 if (!$this->storage->exists($fileName)) {

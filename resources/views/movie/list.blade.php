@@ -54,7 +54,7 @@
 @section('body')
   <div class="ph movie-filter">
     @foreach($data['movie_type'] as $key=>$name)
-      <a href="/movie/list/{{ $data['page'] }}/{{ $key }}">{{ $name }}</a>
+      <a href="/movie/list/{{ $data['page'] }}/{{ urlencode($name) }}">{{ $name }}</a>
     @endforeach
   </div>
   <div class="fu">
@@ -78,8 +78,8 @@
                     </div>
 
                     <div class="ph movie-table">
-                      <span class="dh">国家</span>
-                      @foreach($movie['country'] as $country){{ $country }}&nbsp;@endforeach
+                      <span class="dh">导演</span>
+                      @foreach($movie['director'] as $country){{ $country }}&nbsp;@endforeach
                     </div>
 
                     <div class="ph movie-table">

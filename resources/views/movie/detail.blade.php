@@ -38,8 +38,8 @@ small {
             </div>
 
             <div class="ph movie-table">
-              <span class="dh">国家</span>
-              @foreach($data['country'] as $country){{ $country }}&nbsp;@endforeach
+              <span class="dh">导演</span>
+              @foreach($data['director'] as $country){{ $country }}&nbsp;@endforeach
             </div>
 
             <div class="ph movie-table">
